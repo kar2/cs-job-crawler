@@ -3,27 +3,26 @@ package main
 import (
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/gocolly/colly"
 )
 
 func main() {
 	fmt.Println("Starting...")
-	// scrape()
-
-	//baseURL := "https://www.linkedin.com"
 	c := colly.NewCollector()
 
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
-		// Get new link
 
-		if e.Attr("data-control-name") != "jobdetails_similarjobs" {
-			fmt.Println("Ending...")
+		link := e.Attr("href")
+
+		if strings.Contains(link, "/jobs/view/") {
+			fmt.Println("New job link: " + link)
+		} else {
 			return
 		}
-		link := e.Attr("href")
-		fmt.Println("Link to next page: " + link)
-		e.Request.Visit(link)
+
+		c.Visit(e.Request.AbsoluteURL(link))
 
 	})
 
