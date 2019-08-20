@@ -9,7 +9,7 @@ import (
 	"github.com/gocolly/colly"
 )
 
-func crawl(numPages int) map[int]string {
+func crawl(numPages int, baseURL string) map[int]string {
 
 	fmt.Println("Starting crawler...")
 	c := colly.NewCollector(
@@ -47,7 +47,7 @@ func crawl(numPages int) map[int]string {
 	})
 
 	// Base url
-	c.Visit("https://www.linkedin.com/jobs/view/1404185031/")
+	c.Visit(baseURL)
 
 	fmt.Println("Shutting down crawler...")
 	fmt.Println()
