@@ -5,6 +5,7 @@ import (
 	"log"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gocolly/colly"
 )
@@ -13,8 +14,13 @@ func crawl(numPages int, baseURL string) map[int]string {
 
 	fmt.Println("Starting crawler...")
 	c := colly.NewCollector(
-		colly.MaxDepth(2),
+		colly.MaxDepth(5),
 	)
+
+	c.Limit(&colly.LimitRule{
+		Parallelism: 5,
+		Delay:       2 * time.Second,
+	})
 
 	// Map job ID to link
 	linkMap := make(map[int]string)

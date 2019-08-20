@@ -3,9 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"time"
 )
 
 func main() {
+
+	start := time.Now()
 
 	// Parse cmd line arg
 	numPagesPtr := flag.Int("n", 25, "Number of jobs to crawl. (Optional)")
@@ -19,4 +22,6 @@ func main() {
 	}
 	linkMap := crawl(*numPagesPtr, *baseURLPtr)
 	exportAsTSV(process(linkMap))
+
+	fmt.Println("Finished execution in " + fmt.Sprintf("%f", time.Since(start).Seconds()) + " seconds.")
 }
