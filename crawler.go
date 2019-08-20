@@ -9,6 +9,10 @@ import (
 	"github.com/gocolly/colly"
 )
 
+const (
+	maxPages = 5
+)
+
 func crawl() map[int]string {
 
 	fmt.Println("Starting...")
@@ -31,7 +35,7 @@ func crawl() map[int]string {
 			jobLink := rawLink[:strings.Index(rawLink, "?")]
 			jobSlice := strings.Split(jobLink, "-")
 			jobID, _ := strconv.Atoi(jobSlice[len(jobSlice)-1])
-			if linkMap[jobID] == "" && len(linkMap) < 10 {
+			if linkMap[jobID] == "" && len(linkMap) < maxPages {
 				linkMap[jobID] = jobLink
 				fmt.Println("Visiting: " + jobLink)
 				c.Visit(e.Request.AbsoluteURL(jobLink))
