@@ -75,11 +75,12 @@ func constructJobFromLink(link string) Job {
 
 func process(linkMap map[int]string) map[int]Job {
 
+	fmt.Println("Processing jobs...")
 	// Map from Linkedin page ID to Job struct
 	jobs := make(map[int]Job)
 	for id, link := range linkMap {
 		jobs[id] = constructJobFromLink(link)
 	}
-	fmt.Println("Successfully processed " + strconv.Itoa(maxPages) + " jobs.")
+	fmt.Println("Successfully processed " + strconv.Itoa(len(linkMap)) + " jobs.")
 	return jobs
 }
