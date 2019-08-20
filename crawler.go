@@ -15,7 +15,7 @@ const (
 
 func crawl() map[int]string {
 
-	fmt.Println("Starting...")
+	fmt.Println("Starting crawler...")
 	c := colly.NewCollector(
 		colly.MaxDepth(2),
 	)
@@ -50,9 +50,10 @@ func crawl() map[int]string {
 		log.Println("Something went wrong:", err)
 	})
 
+	// Base url
 	c.Visit("https://www.linkedin.com/jobs/view/1404185031/")
 
-	fmt.Println("Ending...")
+	fmt.Println("Shutting down crawler...")
 
 	return linkMap
 }

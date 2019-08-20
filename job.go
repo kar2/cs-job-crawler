@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -70,10 +72,14 @@ func constructJobFromLink(link string) Job {
 
 	return job
 }
+
 func process(linkMap map[int]string) map[int]Job {
+
+	// Map from Linkedin page ID to Job struct
 	jobs := make(map[int]Job)
 	for id, link := range linkMap {
 		jobs[id] = constructJobFromLink(link)
 	}
+	fmt.Println("Successfully processed " + strconv.Itoa(maxPages) + " jobs.")
 	return jobs
 }
