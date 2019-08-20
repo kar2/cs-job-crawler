@@ -10,5 +10,5 @@ func main() {
 
 	// Crawl and process jobs
 	linkMap := crawl(*numPagesPtr)
-	process(linkMap)
+	exportAsTSV(process(linkMap))
 }

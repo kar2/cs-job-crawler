@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
@@ -83,4 +84,33 @@ func process(linkMap map[int]string) map[int]Job {
 	}
 	fmt.Println("Successfully processed " + strconv.Itoa(len(linkMap)) + " jobs.")
 	return jobs
+}
+
+func exportAsTSV(jobMap map[int]Job) int {
+	fmt.Println()
+	fmt.Println("Exporting jobs as TSV...")
+
+	sep := "\t"
+
+	// Create output file
+	tsv, err := os.Create("./jobs.tsv")
+	if err != nil {
+		fmt.Println(err)
+		return -1
+	}
+	defer tsv.Close()
+
+	// Write header
+	tsv.WriteString("Company" + sep + "Role" + sep + "Link")
+	tsv.WriteString("\n")
+
+	// Write to tsv
+	for _, job := range jobMap {
+		tsv.WriteString(job.company + sep + job.role + sep + job.link)
+		tsv.WriteString("\n")
+	}
+	tsv.Sync()
+
+	fmt.Println("Finished exporting.")
+	return 0
 }
